@@ -9,7 +9,11 @@ function printHelp() {
 }
 
 function printVersion() {
-  console.log('bpi v0.1.2');
+  console.log('bpi v0.1.3');
+}
+
+function calculate(data, script) {
+  return data.rate.replace(/,/, '') * script;
 }
 
 function listCurrencies() {
@@ -32,7 +36,14 @@ function checkPrice() {
       handleApiError(error, data);
     }
 
-    console.log(data.bpi[code].rate + ' ' + code);
+    var option = process.argv[3] && process.argv[3].match(
+        /--calculate=([\d.]+)/);
+
+    if (option) {
+      console.log(calculate(data.bpi[code], option[1]).toFixed(8));
+    } else {
+      console.log(data.bpi[code].rate + ' ' + code);
+    }
   });
 }
 

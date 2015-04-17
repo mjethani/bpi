@@ -1,7 +1,7 @@
 {
   "name": "bpi",
-  "version": "0.1.2",
-  "description": "The Bitcoin market price in various currencies",
+  "version": "0.1.3",
+  "description": "The Bitcoin price in various currencies using CoinDesk's Bitcoin Price Index API",
   "author": {
     "name": "Manish Jethani",
     "email": "manish.jethani@gmail.com",
@@ -16,6 +16,10 @@
   "preferGlobal": true,
   "engines": {
     "node": ">=0.12.0"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/mjethani/bpi.git"
   },
   "license": "ISC"
 }
