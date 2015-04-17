@@ -8,5 +8,20 @@ $ bpi NZD
 $ 
 ```
 
+```javascript
+var bpi = require('bpi');
+
+var code = process.argv[2] || 'EUR';
+
+bpi.price(code, function (error, data) {
+  if (error) {
+    console.error(String(data || error));
+    process.exit(1);
+  }
+
+  console.log(data.bpi[code].rate + ' ' + code);
+});
+```
+
 http://www.coindesk.com/price/
 

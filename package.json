@@ -1,7 +1,7 @@
 {
   "name": "bpi",
-  "version": "0.1.0",
-  "description": "Check the Bitcoin market price",
+  "version": "0.1.1",
+  "description": "Check the Bitcoin market price in various currencies using CoinDesk's Bitcoin Price Index API",
   "author": {
     "name": "Manish Jethani",
     "email": "manish.jethani@gmail.com",
