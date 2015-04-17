@@ -9,7 +9,7 @@ function printHelp() {
 }
 
 function printVersion() {
-  console.log('bpi v0.1.1');
+  console.log('bpi v0.1.2');
 }
 
 function listCurrencies() {
