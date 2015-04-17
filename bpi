@@ -1,0 +1,101 @@
+#!/usr/bin/env node
+
+// usage: bpi [<code>]
+
+function callApi(url, callback) {
+  require('https').get(url, function (res) {
+    if (res.statusCode === 200 || res.statusCode === 404) {
+      var data = '';
+      res.on('data', function (chunk) {
+        data += chunk;
+      });
+      res.on('end', function () {
+        try {
+          data = JSON.parse(data);
+        } catch (error) {
+        }
+        callback(null, data);
+      });
+    } else {
+      callback('HTTP: ' + res.statusCode + ' ' + res.statusMessage);
+    }
+  }).on('error', function (error) {
+    callback(error);
+  });
+}
+
+function printHelp() {
+  console.log('usage: bpi [<code>]');
+  console.log('       bpi --currencies');
+  console.log('       bpi --help');
+  console.log('       bpi --version');
+  console.log();
+}
+
+function printVersion() {
+  console.log('bpi v0.1.0');
+}
+
+function listCurrencies() {
+  var api = 'https://api.coindesk.com/v1/bpi/supported-currencies.json';
+
+  callApi(api, function (error, data) {
+    if (error || typeof data !== 'object') {
+      handleApiError(error, data);
+    }
+
+    data.forEach(function (item) {
+      console.log(item.currency + '\t' + item.country);
+    });
+  });
+}
+
+function checkPrice() {
+  var code = process.argv[2] || 'USD';
+
+  var api = 'https://api.coindesk.com/v1/bpi/currentprice/'
+    + code + '.json';
+
+  callApi(api, function (error, data) {
+    if (error || typeof data !== 'object') {
+      handleApiError(error, data);
+    }
+
+    console.log(data.bpi[code].rate + ' ' + code);
+  });
+}
+
+function handleApiError(error, data) {
+  var errorMessage = error ? String(error)
+    : typeof data !== 'object' ? data
+    : null;
+  if (errorMessage) {
+    console.error(errorMessage);
+    process.exit(1);
+  } else {
+    process.exit();
+  }
+}
+
+function handleUnknownOption(option) {
+  console.error("Unknown option '" + option + "'.");
+  console.error();
+  console.error("See 'bpi --help'.");
+  console.error();
+  process.exit(1);
+}
+
+var option = process.argv[2];
+
+if (option === '--help' || option === '-h' || option === '-?') {
+  printHelp();
+} else if (option === '--version' || option === '-V') {
+  printVersion();
+} else if (option === '--currencies') {
+  listCurrencies();
+} else if (option && option[0] === '-') {
+  handleUnknownOption(option);
+} else {
+  checkPrice();
+}
+

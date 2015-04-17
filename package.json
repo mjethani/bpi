@@ -1,0 +1,21 @@
+{
+  "name": "bpi",
+  "version": "0.1.0",
+  "description": "Check the Bitcoin market price",
+  "author": {
+    "name": "Manish Jethani",
+    "email": "manish.jethani@gmail.com",
+    "url": "http://manishjethani.com/"
+  },
+  "bin": {
+    "bpi": "./bpi"
+  },
+  "keywords": [
+    "bitcoin"
+  ],
+  "preferGlobal": true,
+  "engines": {
+    "node": ">=0.12.0"
+  },
+  "license": "ISC"
+}
